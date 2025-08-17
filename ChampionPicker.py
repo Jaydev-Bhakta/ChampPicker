@@ -33,17 +33,26 @@ if num_rows > 0:
         writer.writerow(header)  # Write the header
         writer.writerows(filtered_champions)
 
-#reads the filtered champions from the CSV file and selects a random champion
-    with open('FilteredChampions.csv', 'r') as file:
-        reader = csv.reader(file)
-        header = next(reader)  # Skip the header row
-        filtered_champions = [row for row in reader]
+#reads the filtered champions from the CSV file and selects 3 random champions
+with open('FilteredChampions.csv', 'r') as file:
+    reader = csv.reader(file)
+    header = next(reader)  # Skip header
+    filtered_champions = list(reader)  # Don't skip again
+
+# Ensure there are champions available for the selected role
+champion_names = [row[0] for row in filtered_champions]
+
+
+random_champions = random.sample(champion_names, 3)
+
 
 # Select a random index from the filtered list and -1 for the header
 print(f"Number of champions available for {Role}: {len(filtered_champions)}")
 
 
-print(f"Randomly selected champion Champion: {random.choice(filtered_champions)[0]}")
+print(f"Randomly selected champion Champions: {random.choice(filtered_champions)[0]}")
+
+print(f"Here are 3 random champions you can play:{random_champions}")
 
 #deletes the filtered champions CSV file
 os.remove('FilteredChampions.csv')
@@ -51,3 +60,4 @@ print("FilteredChampions.csv has been deleted.")
 
 #keeps the command prompt open until the user presses enter
 input("Press Enter to exit the program...")
+
